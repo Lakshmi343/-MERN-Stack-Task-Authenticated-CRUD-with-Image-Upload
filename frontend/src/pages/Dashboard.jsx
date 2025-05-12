@@ -365,7 +365,7 @@ const Dashboard = () => {
     setTitle(item.title);
     setDesc(item.description);
     setEditId(item._id);
-    setPreview(`http://localhost:5000/${item.image}`);
+    setPreview(`https://mern-stack-task-authenticated-crud-with.onrender.com/${item.image}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -374,7 +374,7 @@ const Dashboard = () => {
     
     setIsLoading(true);
     try {
-      await axios.delete(`http://localhost:5000/api/items/${id}`, {
+      await axios.delete(`https://mern-stack-task-authenticated-crud-with.onrender.com/api/items/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchItems();
@@ -542,7 +542,7 @@ const Dashboard = () => {
               onMouseLeave={() => setHoveredCard(null)}
             >
               <img
-                src={`http://localhost:5000/${item.image}`}
+                src={`https://mern-stack-task-authenticated-crud-with.onrender.com/${item.image}`}
                 alt={item.title}
                 style={{
                   ...styles.itemImage,

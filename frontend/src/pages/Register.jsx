@@ -95,7 +95,7 @@ const Register = () => {
     if (!email || !password) return;
     setIsLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/auth/register", { email, password });
+      await axios.post("https://mern-stack-task-authenticated-crud-with.onrender.com/api/auth/register", { email, password });
       alert("Registered successfully!");
       navigate("/");
     } catch (err) {
