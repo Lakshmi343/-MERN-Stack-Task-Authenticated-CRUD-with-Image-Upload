@@ -1,407 +1,4 @@
 
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-// import { useAuth } from "../context/AuthContext";
-
-// const Dashboard = () => {
-//   const { token } = useAuth();
-//   const [items, setItems] = useState([]);
-//   const [filteredItems, setFilteredItems] = useState([]);
-//   const [title, setTitle] = useState("");
-//   const [desc, setDesc] = useState("");
-//   const [image, setImage] = useState(null);
-//   const [preview, setPreview] = useState(null);
-//   const [search, setSearch] = useState("");
-//   const [editId, setEditId] = useState(null);
-//   const [isLoading, setIsLoading] = useState(false);
-//    const [isFocused, setIsFocused] = useState(false);
-
-//   // Base styles
-//   const styles = {
-//     container: {
-//       padding: "20px",
-//       maxWidth: "1200px",
-//       margin: "0 auto",
-//       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
-//     },
-//     header: {
-//       fontSize: "28px",
-//       fontWeight: "bold",
-//       marginBottom: "20px",
-//       color: "#2c3e50",
-//       borderBottom: "2px solid #3498db",
-//       paddingBottom: "10px"
-//     },
-//     searchInput: {
-//       width: "100%",
-//       padding: "12px 15px",
-//       marginBottom: "20px",
-//       borderRadius: "4px",
-//       border: "1px solid #ddd",
-//       fontSize: "16px",
-//       boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-//       transition: "all 0.3s ease",
-//       outline: "none"
-//     },
-//     searchInputFocus: {
-//       borderColor: "#3498db",
-//       boxShadow: "0 2px 8px rgba(52, 152, 219, 0.3)"
-//     },
-//     formGroup: {
-//       marginBottom: "15px"
-//     },
-//     input: {
-//       width: "100%",
-//       padding: "12px 15px",
-//       borderRadius: "4px",
-//       border: "1px solid #ddd",
-//       fontSize: "16px",
-//       boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-//       transition: "all 0.3s ease"
-//     },
-//     textarea: {
-//       width: "100%",
-//       padding: "12px 15px",
-//       borderRadius: "4px",
-//       border: "1px solid #ddd",
-//       fontSize: "16px",
-//       minHeight: "100px",
-//       resize: "vertical",
-//       boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-//       transition: "all 0.3s ease"
-//     },
-//     fileInput: {
-//       margin: "10px 0",
-//       width: "100%"
-//     },
-//     previewImage: {
-//       height: "150px",
-//       width: "100%",
-//       objectFit: "cover",
-//       borderRadius: "4px",
-//       margin: "10px 0",
-//       border: "1px solid #ddd"
-//     },
-//     button: {
-//       padding: "12px 20px",
-//       borderRadius: "4px",
-//       border: "none",
-//       fontSize: "16px",
-//       fontWeight: "bold",
-//       cursor: "pointer",
-//       transition: "all 0.3s ease",
-//       marginRight: "10px"
-//     },
-//     primaryButton: {
-//       backgroundColor: "#3498db",
-//       color: "white"
-//     },
-//     primaryButtonHover: {
-//       backgroundColor: "#2980b9"
-//     },
-//     editButton: {
-//       backgroundColor: "#f39c12",
-//       color: "white"
-//     },
-//     editButtonHover: {
-//       backgroundColor: "#e67e22"
-//     },
-//     deleteButton: {
-//       backgroundColor: "#e74c3c",
-//       color: "white"
-//     },
-//     deleteButtonHover: {
-//       backgroundColor: "#c0392b"
-//     },
-//     itemsGrid: {
-//       display: "grid",
-//       gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-//       gap: "20px",
-//       marginTop: "30px"
-//     },
-//     itemCard: {
-//       border: "1px solid #ddd",
-//       borderRadius: "8px",
-//       overflow: "hidden",
-//       boxShadow: "0 3px 10px rgba(0,0,0,0.1)",
-//       transition: "all 0.3s ease",
-//       backgroundColor: "white"
-//     },
-//     itemCardHover: {
-//       transform: "translateY(-5px)",
-//       boxShadow: "0 5px 15px rgba(0,0,0,0.2)"
-//     },
-//     itemImage: {
-//       width: "100%",
-//       height: "200px",
-//       objectFit: "cover"
-//     },
-//     itemContent: {
-//       padding: "15px"
-//     },
-//     itemTitle: {
-//       fontSize: "18px",
-//       fontWeight: "bold",
-//       marginBottom: "10px",
-//       color: "#2c3e50"
-//     },
-//     itemDescription: {
-//       color: "#7f8c8d",
-//       marginBottom: "15px",
-//       lineHeight: "1.5"
-//     },
-//     actionButtons: {
-//       display: "flex",
-//       gap: "10px"
-//     },
-//     loading: {
-//       textAlign: "center",
-//       padding: "20px",
-//       fontSize: "18px",
-//       color: "#7f8c8d"
-//     }
-//   };
-
-//   const fetchItems = async () => {
-//     setIsLoading(true);
-//     try {
-//       const res = await axios.get("http://localhost:5000/api/items", {
-//         headers: { Authorization: `Bearer ${token}` },
-//       });
-//       setItems(res.data);
-//       setFilteredItems(res.data);
-//     } catch (error) {
-//       console.error("Error fetching items:", error);
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
-
-//   const handleImageChange = (e) => {
-//     const file = e.target.files[0];
-//     setImage(file);
-//     setPreview(URL.createObjectURL(file));
-//   };
-
-//   const handleCreateOrUpdate = async () => {
-//     if (!title || !desc) return alert("Title and description are required!");
-    
-//     setIsLoading(true);
-//     try {
-//       const formData = new FormData();
-//       formData.append("title", title);
-//       formData.append("description", desc);
-//       if (image) formData.append("image", image);
-
-//       const url = editId
-//         ? `http://localhost:5000/api/items/${editId}`
-//         : "http://localhost:5000/api/items";
-
-//       const method = editId ? axios.put : axios.post;
-
-//       await method(url, formData, {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//           "Content-Type": "multipart/form-data",
-//         },
-//       });
-
-//       setTitle("");
-//       setDesc("");
-//       setImage(null);
-//       setPreview(null);
-//       setEditId(null);
-//       fetchItems();
-//     } catch (error) {
-//       console.error("Error saving item:", error);
-//       alert("An error occurred while saving the item");
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
-
-//   const handleEdit = (item) => {
-//     setTitle(item.title);
-//     setDesc(item.description);
-//     setEditId(item._id);
-//     setPreview(`http://localhost:5000/${item.image}`);
-//     window.scrollTo({ top: 0, behavior: "smooth" });
-//   };
-
-//   const handleDelete = async (id) => {
-//     if (!window.confirm("Are you sure you want to delete this item?")) return;
-    
-//     setIsLoading(true);
-//     try {
-//       await axios.delete(`http://localhost:5000/api/items/${id}`, {
-//         headers: { Authorization: `Bearer ${token}` },
-//       });
-//       fetchItems();
-//     } catch (error) {
-//       console.error("Error deleting item:", error);
-//       alert("An error occurred while deleting the item");
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
-
-//   const handleSearch = (value) => {
-//     setSearch(value);
-//     const filtered = items.filter(item =>
-//       item.title.toLowerCase().includes(value.toLowerCase()) ||
-//       item.description.toLowerCase().includes(value.toLowerCase())
-//     );
-//     setFilteredItems(filtered);
-//   };
-
-//   useEffect(() => {
-//     fetchItems();
-//   }, []);
-
-//   return (
-//     <div style={styles.container}>
-//       <h1 style={styles.header}>Dashboard</h1>
-
-//        <input
-//       id="search"
-//       type="text"
-//       value={search}
-//       onChange={(e) => handleSearch(e.target.value)}
-//       placeholder="Search items..."
-//       style={{
-//         ...styles.searchInput,
-//         ...(isFocused ? styles.searchInputFocus : {}),
-//       }}
-//       onFocus={() => setIsFocused(true)}
-//       onBlur={() => setIsFocused(false)}
-//     />
-
-//       <div style={styles.formGroup}>
-//         <input
-//           style={styles.input}
-//           value={title}
-//           onChange={e => setTitle(e.target.value)}
-//           placeholder="Item title"
-//         />
-//       </div>
-
-//       <div style={styles.formGroup}>
-//         <textarea
-//           style={styles.textarea}
-//           value={desc}
-//           onChange={e => setDesc(e.target.value)}
-//           placeholder="Item description"
-//         />
-//       </div>
-
-//       <div style={styles.formGroup}>
-//         <input
-//           style={styles.fileInput}
-//           type="file"
-//           onChange={handleImageChange}
-//           accept="image/*"
-//         />
-//       </div>
-
-//       {preview && (
-//         <img
-//           src={preview}
-//           alt="Preview"
-//           style={styles.previewImage}
-//         />
-//       )}
-
-//       <button
-//         style={{
-//           ...styles.button,
-//           ...styles.primaryButton,
-//           ...(!title || !desc) && { opacity: 0.7, cursor: "not-allowed" }
-//         }}
-//         onClick={handleCreateOrUpdate}
-//         onMouseEnter={(e) => e.target.style.backgroundColor = styles.primaryButtonHover.backgroundColor}
-//         onMouseLeave={(e) => e.target.style.backgroundColor = styles.primaryButton.backgroundColor}
-//         disabled={!title || !desc}
-//       >
-//         {editId ? "Update Item" : "Add Item"}
-//       </button>
-
-//       {isLoading ? (
-//         <div style={styles.loading}>Loading...</div>
-//       ) : (
-//         <div style={styles.itemsGrid}>
-//           {filteredItems.map((item) => (
-//             <div
-//               key={item._id}
-//               style={styles.itemCard}
-//               onMouseEnter={(e) => e.target.style = {...styles.itemCard, ...styles.itemCardHover}}
-//               onMouseLeave={(e) => e.target.style = styles.itemCard}
-//             >
-//               <img
-//                 src={`http://localhost:5000/${item.image}`}
-//                 alt={item.title}
-//                 style={styles.itemImage}
-//               />
-//               <div style={styles.itemContent}>
-//                 <h2 style={styles.itemTitle}>{item.title}</h2>
-//                 <p style={styles.itemDescription}>{item.description}</p>
-//                 <div style={styles.actionButtons}>
-//                   <button
-//                     style={{
-//                       ...styles.button,
-//                       ...styles.editButton
-//                     }}
-//                     onClick={() => handleEdit(item)}
-//                     onMouseEnter={(e) => e.target.style.backgroundColor = styles.editButtonHover.backgroundColor}
-//                     onMouseLeave={(e) => e.target.style.backgroundColor = styles.editButton.backgroundColor}
-//                   >
-//                     Edit
-//                   </button>
-//                   <button
-//                     style={{
-//                       ...styles.button,
-//                       ...styles.deleteButton
-//                     }}
-//                     onClick={() => handleDelete(item._id)}
-//                     onMouseEnter={(e) => e.target.style.backgroundColor = styles.deleteButtonHover.backgroundColor}
-//                     onMouseLeave={(e) => e.target.style.backgroundColor = styles.deleteButton.backgroundColor}
-//                   >
-//                     Delete
-//                   </button>
-//                 </div>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       )}
-
-//       {/* Responsive styles */}
-//       <style>
-//         {`
-//           @media (max-width: 768px) {
-//             .items-grid {
-//               grid-template-columns: 1fr;
-//             }
-            
-//             .item-card {
-//               margin-bottom: 20px;
-//             }
-            
-//             .action-buttons {
-//               flex-direction: column;
-//             }
-            
-//             .action-buttons button {
-//               width: 100%;
-//               margin-bottom: 10px;
-//             }
-//           }
-//         `}
-//       </style>
-//     </div>
-//   );
-// };
-
-// export default Dashboard;
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
@@ -425,7 +22,6 @@ const Dashboard = () => {
     file: false
   });
 
-  // Base styles with enhanced interactive elements
   const styles = {
     container: {
       padding: "20px",
@@ -710,7 +306,7 @@ const Dashboard = () => {
   const fetchItems = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get("http://localhost:5000/api/items", {
+      const res = await axios.get("https://mern-stack-task-authenticated-crud-with.onrender.com/api/items", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setItems(res.data);
@@ -739,8 +335,8 @@ const Dashboard = () => {
       if (image) formData.append("image", image);
 
       const url = editId
-        ? `http://localhost:5000/api/items/${editId}`
-        : "http://localhost:5000/api/items";
+        ? `https://mern-stack-task-authenticated-crud-with.onrender.com/api/items/${editId}`
+        : "https://mern-stack-task-authenticated-crud-with.onrender.com/api/items";
 
       const method = editId ? axios.put : axios.post;
 
@@ -815,7 +411,6 @@ const Dashboard = () => {
     <div style={styles.container}>
       <h1 style={styles.header}>Dashboard</h1>
 
-      {/* Enhanced Search */}
       <div style={styles.searchContainer}>
         <span style={styles.searchIcon}>🔍</span>
         <input
@@ -833,7 +428,7 @@ const Dashboard = () => {
         />
       </div>
 
-      {/* Form Container */}
+     
       <div style={styles.formContainer}>
         <div style={styles.formGroup}>
           <label style={styles.inputLabel}>Title</label>
@@ -867,7 +462,7 @@ const Dashboard = () => {
           />
         </div>
 
-        {/* Enhanced File Input */}
+        
         <div 
           style={{
             ...styles.fileInputContainer,
@@ -923,7 +518,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Items Grid */}
+      
       {isLoading ? (
         <div style={styles.loading}>
           <div style={styles.loadingSpinner}></div>
@@ -1008,7 +603,7 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Floating Action Button */}
+   
       <div 
         style={{
           ...styles.floatingActionButton,
@@ -1021,7 +616,7 @@ const Dashboard = () => {
         ↑
       </div>
 
-      {/* Global Animations */}
+     
       <style>
         {`
           @keyframes spin {

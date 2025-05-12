@@ -1,36 +1,3 @@
-// import { Link, useNavigate } from "react-router-dom";
-// import { useAuth } from "../context/AuthContext";
-
-// const Navbar = () => {
-//   const { token, logout } = useAuth();
-//   const navigate = useNavigate();
-
-//   const handleLogout = () => {
-//     logout();
-//     navigate("/");
-//   };
-
-//   return (
-//     <nav className="bg-gray-800 text-white px-6 py-4 flex justify-between items-center">
-//       <Link to="/" className="text-xl font-bold">MyApp</Link>
-//       <div>
-//         {!token ? (
-//           <>
-//             <Link to="/" className="mr-4">Login</Link>
-//             <Link to="/register">Register</Link>
-//           </>
-//         ) : (
-//           <>
-//             <Link to="/dashboard" className="mr-4">Dashboard</Link>
-//             <button onClick={handleLogout} className="bg-red-500 px-3 py-1 rounded">Logout</button>
-//           </>
-//         )}
-//       </div>
-//     </nav>
-//   );
-// };
-
-// export default Navbar;
 
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -44,7 +11,7 @@ const Navbar = () => {
     navigate("/");
   };
 
-  // Styles
+ 
   const styles = {
     nav: {
       backgroundColor: "#1a1a2e",
@@ -101,7 +68,7 @@ const Navbar = () => {
       fontSize: "1.5rem",
       cursor: "pointer",
     },
-    // Media queries will be handled in the style tag
+ 
   };
 
   return (
@@ -109,7 +76,7 @@ const Navbar = () => {
       <nav style={styles.nav}>
         <Link to="/" style={styles.logo}>MyApp</Link>
         
-        {/* Mobile menu button */}
+       
         <button 
           style={styles.mobileMenuButton}
           onClick={() => {
@@ -120,12 +87,12 @@ const Navbar = () => {
           ☰
         </button>
         
-        {/* Navigation links */}
+      
         <div 
           id="nav-links"
           style={{
             ...styles.navLinks,
-            // Responsive styles will be added via style tag
+          
           }}
         >
           {!token ? (
@@ -170,7 +137,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Style tag for responsive design */}
+   
       <style>
         {`
           @media (max-width: 768px) {
